@@ -1,0 +1,123 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Genie Fight Simulator", "Synapse")
+-- MAIN
+local Main = Window:NewTab("Main")
+local MainSection = Main:NewSection("Main")
+ 
+MainSection:NewToggle("Infinite Golds And Part", "Made By dielan", function(state)
+    if state then
+        getgenv().auto = true 
+        while task.wait(0.01) and auto do
+            local Golds = {57,58,59}
+            for i,v in pairs(Golds) do
+            game:GetService("Players").LocalPlayer.Event.AddGoldAndDiamond:FireServer(v)
+            end
+            local Parts = {74,75,76}
+            for i,v in pairs(Parts) do
+            game:GetService("Players").LocalPlayer.Event.AddPart:FireServer(v)
+            end
+            end
+    else
+        getgenv().auto = false 
+    end
+end)
+ 
+MainSection:NewToggle("Mass Open Best Egg", "Made By dielan", function(state)
+    if state then
+        getgenv().mass = true 
+        while task.wait(0.2) and mass do
+        local dielan = {
+            [1] = 12,
+            [2] = 3,
+            [3] = "M"}
+        game:GetService("ReplicatedStorage").Event.OpenEgg:FireServer(unpack(dielan))
+        end
+    else
+        getgenv().mass = false 
+    end
+end)
+ 
+MainSection:NewButton("Claim All Loyalty Rewards", "Claim All Loyalty Rewards Without Having To Wait", function()
+    local claim = {1,2,3,4,5,6,7,8,9}
+    for i,v in pairs(claim) do
+    game:GetService("ReplicatedStorage").Event.StayGameTimeReward:FireServer(v)
+    end
+end)
+
+MainSection:NewButton("Unlock All Worlds Instantly", "Made By dielan", function()
+    local Cost = {2000,10000,30000,10000000,100000000,1000000000,}
+    local Doors = {"Door2","Door3","Door4","Door7","Door8","Door10",}
+    for i,v in pairs(Cost) do
+    for i,v in pairs(Doors) do   
+    game:GetService("ReplicatedStorage").Event.IncomeGoldDoor:FireServer(v,v)
+    end
+    end
+    task.wait(1)
+    local Cost = {1000000,20000000000,50000000000}
+    local Doors = {"Door6","Door11","Door12"}
+    for i,v in pairs(Cost) do
+    for i,v in pairs(Doors) do   
+    game:GetService("ReplicatedStorage").Event.IncomeGoldDoor:FireServer(v,v)
+    end
+    end
+end)
+
+MainSection:NewButton("Buy All Teleport World Maps Instantly", "Made By dielan", function()
+    local Numbers = {"2","3","4","5","6","7","8","9","10","11","12"}
+    for i,v in pairs(Numbers) do
+    game:GetService("ReplicatedStorage").Event.IncomeGoldTelePort:FireServer(v)
+    end
+end)
+
+-- UNIVERSAL
+local Universal = Window:NewTab("Universal")
+local UniversalSection = Universal:NewSection("Universal")
+
+UniversalSection:NewSlider("WalkSpeed", "Change Your Speed", 500, 16, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+UniversalSection:NewSlider("JumpPower", "Change Your Jump Power", 500, 50, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
+UniversalSection:NewButton("Reset WS/JP", "Resets To All Defaults", function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+end)
+
+UniversalSection:NewButton("RemoveDislayNames", "Remove Everyone's Dislay Name", function()
+    local Players = game:FindService("Players")
+    require(game:GetService("Chat"):WaitForChild("ClientChatModules").ChatSettings).PlayerDisplayNamesEnabled = false
+    local function rename(character,name)
+        repeat task.wait() until character:FindFirstChildWhichIsA("Humanoid")
+        character:FindFirstChildWhichIsA("Humanoid").DisplayName = name
+    end
+    for i,v in next, Players:GetPlayers() do
+        if v.Character then
+            v.DisplayName = v.Name
+            rename(v.Character,v.Name)
+        end
+        v.CharacterAdded:Connect(function(char)
+            rename(char,v.Name)
+        end)
+    end
+    Players.PlayerAdded:Connect(function(plr)
+        plr.DisplayName = plr.Name
+        plr.CharacterAdded:Connect(function(char)
+            rename(char,plr.Name)
+        end)
+    end)
+end)
+
+UniversalSection:NewButton("InfYield", "Admin Commands", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end)
+
+-- TOOGLES UI
+local ToggleUI = Window:NewTab("ToggleUI")
+local ToggleUI = ToggleUI:NewSection("ToggleUI")
+
+ToggleUI:NewKeybind("Close&Open UI", "Close&Open UI Using Keybind", Enum.KeyCode.LeftControl, function()
+	Library:ToggleUI()
+end)
