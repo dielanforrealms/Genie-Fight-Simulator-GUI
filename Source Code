@@ -154,6 +154,6 @@ end)
 local ToggleUI = Window:NewTab("ToggleUI")
 local ToggleUI = ToggleUI:NewSection("ToggleUI")
 
-ToggleUI:NewKeybind("Close&Open UI", "Close&Open UI Using Keybind", Enum.KeyCode.LeftControl, function()
+ToggleUI:NewKeybind("Toggle Key", "Close&Open UI Using Keybind", Enum.KeyCode.LeftControl, function()
 	Library:ToggleUI()
 end)
