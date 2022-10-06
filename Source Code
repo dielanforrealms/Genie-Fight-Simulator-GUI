@@ -1,5 +1,5 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("Genie Fight Simulator By dielan", "Synapse")
+local Window = Library.CreateLib("Genie Fight Simulator", "Synapse")
 -- MAIN
 local Main = Window:NewTab("Main")
 local MainSection = Main:NewSection("Main")
@@ -79,6 +79,19 @@ end)
 
 UniversalSection:NewSlider("JumpPower", "Change Your Jump Power", 500, 50, function(s)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
+UniversalSection:NewToggle("InfJump", "Makes Your Jump Have No Cooldown", function(state)
+    if state then
+InfiniteJumpEnabled = true
+game:GetService("UserInputService").JumpRequest:connect(function()
+    if InfiniteJumpEnabled then
+        game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+    end
+end) 
+    else
+InfiniteJumpEnabled = false
+    end
 end)
 
 UniversalSection:NewButton("Reset WS/JP", "Resets To All Defaults", function()
