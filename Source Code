@@ -94,6 +94,26 @@ InfiniteJumpEnabled = false
     end
 end)
 
+UniversalSection:NewToggle("Noclip", "Backrooms Flashback", function(state)
+    if state then
+        noClipped = true
+
+        game:GetService("RunService").Stepped:Connect(function()
+           if noClipped then
+               pcall(function()
+                   for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+                       if v.ClassName == "Part" or v.ClassName == "MeshPart" then
+                           v.CanCollide = false
+                       end
+                   end
+               end)
+           end
+        end)
+    else
+        noClipped = false
+    end
+end)
+
 UniversalSection:NewButton("Reset WS/JP", "Resets To All Defaults", function()
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
